@@ -1,0 +1,34 @@
+void setup () {
+         Heltec.begin(true, true, true, true, BAND);
+}
+ 
+void loop () {
+          Serial.print("Envio de pacote:");
+          Serial.println(contador);
+ 
+          LoRa.beginPacket();
+          LoRa.print(digitalRead(12));
+          LoRa.endPacket();
+ }
+
+char st;
+void setup () {
+          Heltec.begin(true, true, true, true, BAND);
+          pinMode(12, OUTPUT);
+}
+ 
+void loop () {
+int packetSize = LoRa.parsePacket();
+ 
+          if(packetSize) {
+                Serial.print("Pacote recebido '");
+ 
+while(LoRa.available ()) {
+         st = (char)LoRa.read ();
+         Serial.println(st);
+}
+ 
+               Serial.print("'com RSSI");
+               Serial.println(LoRa.packetRssi());
+         }
+}
